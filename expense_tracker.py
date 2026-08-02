@@ -22,7 +22,7 @@ def AddExpense():
 
 def ViewExpense():
     for expense in expenses:
-        print("----------------")
+        print("View your Expenses")
         print("Name:", expense["name"])
         print("Category:", expense["category"])
         print("Amount:", expense["amount"])
@@ -46,12 +46,12 @@ def SearchExpense():
             print("Amount   :", expense["amount"])
 
             found = True
-            
+
     if found == False:
         print("No expense found.")
     
 def TotalExpense():
-    print("total expense is here")
+    print("Total expense is here")
 
     total = 0
 
@@ -60,13 +60,33 @@ def TotalExpense():
 
     print("Total Expense =", total)
 
+def HighestExpense():
+
+    if len(expenses) == 0:
+        print("No expenses found.")
+        return
+
+    highest = expenses[0]
+
+    for expense in expenses:
+        if expense["amount"] > highest["amount"]:
+            highest = expense
+
+    print("\nHighest Expense")
+    print("----------------")
+    print("Name:", highest["name"])
+    print("Category:", highest["category"])
+    print("Amount:", highest["amount"])
+
+
 while True:
     print("MENU")
     print("1..ADD EXPENSE")
     print("2..SEARCH EXPENSE")
     print("3..VIEW EXPENSE")
     print("4..TOTAL EXPENSE")
-    print("5..EXIT")
+    print("5..Highest Expense")
+    print("6..EXIT")
 
     choice = input("Enter your choice: ")
 
@@ -85,6 +105,9 @@ while True:
         TotalExpense()
 
     elif choice == "5":
+        HighestExpense()
+
+    elif choice == "6":
         print("Goodbye!")
         break
 
