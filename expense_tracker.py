@@ -34,6 +34,9 @@ def SearchExpense():
         if expense["category"]==search:
             print("Expense you search...")
 
+def TotalExpense():
+    print("total expense is here")
+
 while True:
     print("MENU")
     print("1..ADD EXPENSE")
@@ -50,13 +53,13 @@ while True:
         AddExpense()
 
     elif choice == "2":
-        ...
+        SearchExpense()
 
     elif choice == "3":
         ViewExpense()
 
     elif choice == "4":
-        ...
+        TotalExpense()
 
     elif choice == "5":
         print("Goodbye!")
