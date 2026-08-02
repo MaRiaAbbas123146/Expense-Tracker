@@ -29,11 +29,27 @@ def ViewExpense():
 
 def SearchExpense():
     print("Searching for your expense according to category")
-    search = input("Type the category you want to searcch: ")
-    for expense in expenses:
-        if expense["category"]==search:
-            print("Expense you search...")
 
+    if len(expenses) == 0:
+        print("No expenses available.")
+        return
+  
+    search = input("Type the category you want to searcch: ")
+
+    found = False
+
+    for expense in expenses:
+        if expense["category"].lower() == search.lower():
+            print("Expense you search...")
+            print("Name     :", expense["name"])
+            print("Category :", expense["category"])
+            print("Amount   :", expense["amount"])
+
+            found = True
+            
+    if found == False:
+        print("No expense found.")
+    
 def TotalExpense():
     print("total expense is here")
 
