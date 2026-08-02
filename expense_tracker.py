@@ -37,6 +37,13 @@ def SearchExpense():
 def TotalExpense():
     print("total expense is here")
 
+    total = 0
+
+    for expense in expenses:
+        total += expense["amount"]
+
+    print("Total Expense =", total)
+
 while True:
     print("MENU")
     print("1..ADD EXPENSE")
