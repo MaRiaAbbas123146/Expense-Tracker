@@ -5,11 +5,11 @@ def AddExpense():
     try:
         print("ADDING THE EXPENSE...")
 
-        name = input("Name: ").strip()
+        name = input("Name: ").strip()#stripe means if someone accidentally types spaces before or after their input, Python removes them.
         category = input("Category: ").strip()
 
         if not name:
-            raise ValueError("Name cannot be empty.")
+            raise ValueError("Name cannot be empty.")#Python ka built-in exception hai ValueEroor
 
         if not category:
             raise ValueError("Category cannot be empty.")
@@ -162,11 +162,11 @@ while True:
         else:
             print("Invalid choice. Please enter a number from 1 to 6.")
 
-    except KeyboardInterrupt:
+    except KeyboardInterrupt:# 'Ctrl + C' by user
         print("\nProgram stopped by user.")
         break
 
-    except EOFError:
+    except EOFError:# This can happen when input is unexpectedly terminated
         print("\nInput was interrupted.")
         break
 
