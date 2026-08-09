@@ -192,16 +192,20 @@ class MySQLDB:
 
 db = MySQLDB()
 
-result = db.delete_expense(1)
+total = db.total_expense()
 
-if result > 0:
-    print("Expense deleted successfully!")
+print("Total Expense:", total)
+
+
+highest = db.highest_expense()
+
+if highest:
+    print("\nHighest Expense")
+    print("ID:", highest[0])
+    print("Name:", highest[1])
+    print("Category:", highest[2])
+    print("Amount:", highest[3])
 else:
-    print("Expense not found.")
-
-rows = db.view_expenses()
-
-for row in rows:
-    print(row)
+    print("No expenses found.")
 
 db.close()
