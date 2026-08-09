@@ -192,7 +192,19 @@ class MySQLDB:
 
 db = MySQLDB()
 
-rows = db.search_expenses("Food")
+result = db.update_expense(
+    1,
+    "Burger",
+    "Food",
+    500
+)
+
+if result > 0:
+    print("Expense updated successfully!")
+else:
+    print("Expense not found.")
+
+rows = db.view_expenses()
 
 for row in rows:
     print(row)
