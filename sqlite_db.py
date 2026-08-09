@@ -63,6 +63,8 @@ class SQLiteDB:
         cursor.close()
 
         return rows
+
+    #search expenses by category
     def search_expenses(self, category):
 
       query = """
@@ -81,6 +83,7 @@ class SQLiteDB:
 
       return rows
     
+    #update
     def update_expense(self, expense_id, name, category, amount):
 
       query = """
@@ -104,6 +107,7 @@ class SQLiteDB:
 
       return affected_rows
 
+    #delete
     def delete_expense(self, expense_id):
 
       query = """
@@ -123,6 +127,7 @@ class SQLiteDB:
 
       return affected_rows
     
+    #total of all expenses
     def total_expense(self):
 
       query = """
@@ -140,6 +145,7 @@ class SQLiteDB:
 
       return result[0] if result[0] is not None else 0
     
+    #highest
     def highest_expense(self):
 
       query = """
