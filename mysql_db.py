@@ -192,15 +192,10 @@ class MySQLDB:
 
 db = MySQLDB()
 
-result = db.update_expense(
-    1,
-    "Burger",
-    "Food",
-    500
-)
+result = db.delete_expense(1)
 
 if result > 0:
-    print("Expense updated successfully!")
+    print("Expense deleted successfully!")
 else:
     print("Expense not found.")
 
