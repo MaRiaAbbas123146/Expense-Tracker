@@ -192,9 +192,7 @@ class MySQLDB:
 
 db = MySQLDB()
 
-db.add_expense("Pizza", "Food", 800)
-
-rows = db.view_expenses()
+rows = db.search_expenses("Food")
 
 for row in rows:
     print(row)
