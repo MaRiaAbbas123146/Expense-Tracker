@@ -2,11 +2,13 @@ import mysql.connector
 from dotenv import load_dotenv
 import os
 
+# Load variables from .env
 load_dotenv()
 
 
 class MySQLDB:
 
+    # Connect to MySQL
     def __init__(self):
 
         self.connection = mysql.connector.connect(
@@ -40,7 +42,7 @@ class MySQLDB:
 
         cursor.close()
 
-    # Add an expense
+    # Add expense
     def add_expense(self, name, category, amount):
 
         query = """
@@ -50,10 +52,8 @@ class MySQLDB:
 
         cursor = self.connection.cursor()
 
-        cursor.execute(
-            query,
-            (name, category, amount)
-        )
+        # Parameterized query
+        cursor.execute(query, (name, category, amount))
 
         self.connection.commit()
 
@@ -99,7 +99,7 @@ class MySQLDB:
 
         return rows
 
-    # Update an expense
+    # Update expense
     def update_expense(self, expense_id, name, category, amount):
 
         query = """
@@ -125,7 +125,7 @@ class MySQLDB:
 
         return affected_rows
 
-    # Delete an expense
+    # Delete expense
     def delete_expense(self, expense_id):
 
         query = """
@@ -145,7 +145,7 @@ class MySQLDB:
 
         return affected_rows
 
-    # Calculate total expenses
+    # Calculate total expense
     def total_expense(self):
 
         query = """
@@ -161,10 +161,7 @@ class MySQLDB:
 
         cursor.close()
 
-        if result[0] is None:
-            return 0
-
-        return result[0]
+        return result[0] if result[0] is not None else 0
 
     # Find highest expense
     def highest_expense(self):
@@ -189,83 +186,17 @@ class MySQLDB:
     # Close database connection
     def close(self):
 
-        self.connection.close()
-
-        print("MySQL connection closed.")
-
-
-# --------------------------------------------------
-# TESTING
-# --------------------------------------------------
+        if self.connection.is_connected():
+            self.connection.close()
+            print("MySQL connection closed.")
 
 db = MySQLDB()
 
-# Add test expense
-db.add_expense("Burger", "Food", 500)
-
-# View expenses
-print("\nAll Expenses")
+db.add_expense("Pizza", "Food", 800)
 
 rows = db.view_expenses()
 
 for row in rows:
     print(row)
 
-# Search expenses
-print("\nFood Expenses")
-
-results = db.search_expenses("Food")
-
-for row in results:
-    print(row)
-
-# Update expense
-print("\nUpdating Expense")
-
-updated = db.update_expense(
-    1,
-    "Pizza",
-    "Food",
-    800
-)
-
-if updated:
-    print("Expense updated successfully!")
-else:
-    print("Expense not found.")
-
-# Delete expense
-print("\nDeleting Expense")
-
-deleted = db.delete_expense(2)
-
-if deleted:
-    print("Expense deleted successfully!")
-else:
-    print("Expense not found.")
-
-# Total expense
-print("\nTotal Expense")
-
-total = db.total_expense()
-
-print("Total Expense:", total)
-
-# Highest expense
-print("\nHighest Expense")
-
-highest = db.highest_expense()
-
-if highest:
-
-    print("ID:", highest[0])
-    print("Name:", highest[1])
-    print("Category:", highest[2])
-    print("Amount:", highest[3])
-
-else:
-
-    print("No expenses found.")
-
-# Close connection
 db.close()
