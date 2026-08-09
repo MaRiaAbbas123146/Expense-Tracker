@@ -190,22 +190,3 @@ class MySQLDB:
             self.connection.close()
             print("MySQL connection closed.")
 
-db = MySQLDB()
-
-total = db.total_expense()
-
-print("Total Expense:", total)
-
-
-highest = db.highest_expense()
-
-if highest:
-    print("\nHighest Expense")
-    print("ID:", highest[0])
-    print("Name:", highest[1])
-    print("Category:", highest[2])
-    print("Amount:", highest[3])
-else:
-    print("No expenses found.")
-
-db.close()

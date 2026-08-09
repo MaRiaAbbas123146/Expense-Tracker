@@ -1,174 +1,211 @@
-expenses = []
+from mysql_db import MySQLDB
 
 
-def AddExpense():
+def add_expense(db):
+    print("\nADDING THE EXPENSE")
+    print("------------------")
+
     try:
-        print("ADDING THE EXPENSE...")
-
-        name = input("Name: ").strip()#stripe means if someone accidentally types spaces before or after their input, Python removes them.
+        name = input("Name: ").strip()
         category = input("Category: ").strip()
-
-        if not name:
-            raise ValueError("Name cannot be empty.")#Python ka built-in exception hai ValueEroor
-
-        if not category:
-            raise ValueError("Category cannot be empty.")
-
         amount = float(input("Amount: "))
 
+        if not name:
+            print("Name cannot be empty.")
+            return
+
+        if not category:
+            print("Category cannot be empty.")
+            return
+
         if amount < 0:
-            raise ValueError("Amount cannot be negative.")
-
-        expense = {
-            "name": name,
-            "category": category,
-            "amount": amount
-        }
-
-        expenses.append(expense)
-
-        print("Expense added successfully")
-        print("Name:", name)
-        print("Amount:", amount)
-        print("Category:", category)
-
-    except ValueError as e:
-        print("Invalid input:", e)
-
-    except Exception as e:
-        print("An unexpected error occurred:", e)
-
-
-def ViewExpense():
-    try:
-        print("\nVIEW YOUR EXPENSES")
-
-        if len(expenses) == 0:
-            print("No expenses available.")
+            print("Amount cannot be negative.")
             return
 
-        for expense in expenses:
-            print("----------------")
-            print("Name:", expense["name"])
-            print("Category:", expense["category"])
-            print("Amount:", expense["amount"])
+        db.add_expense(name, category, amount)
 
-    except Exception as e:
-        print("An unexpected error occurred:", e)
+    except ValueError:
+        print("Please enter a valid amount.")
 
 
-def SearchExpense():
-    try:
-        print("\nSEARCHING FOR YOUR EXPENSE ACCORDING TO CATEGORY")
+def view_expenses(db):
+    print("\nYOUR EXPENSES")
+    print("-------------")
 
-        if len(expenses) == 0:
-            print("No expenses available.")
-            return
+    rows = db.view_expenses()
 
-        search = input("Type the category you want to search: ").strip()
+    if not rows:
+        print("No expenses available.")
+        return
 
-        if not search:
-            raise ValueError("Search category cannot be empty.")
-
-        found = False
-
-        for expense in expenses:
-            if expense["category"].lower() == search.lower():
-                print("\nExpense found!")
-                print("Name     :", expense["name"])
-                print("Category :", expense["category"])
-                print("Amount   :", expense["amount"])
-
-                found = True
-
-        if found == False:
-            print("No expense found.")
-
-    except ValueError as e:
-        print("Invalid input:", e)
-
-    except Exception as e:
-        print("An unexpected error occurred:", e)
-
-
-def TotalExpense():
-    try:
-        print("\nTOTAL EXPENSE")
-
-        total = 0
-
-        for expense in expenses:
-            total += expense["amount"]
-
-        print("Total Expense =", total)
-
-    except Exception as e:
-        print("An unexpected error occurred:", e)
-
-
-def HighestExpense():
-    try:
-        if len(expenses) == 0:
-            print("No expenses found.")
-            return
-
-        highest = expenses[0]
-
-        for expense in expenses:
-            if expense["amount"] > highest["amount"]:
-                highest = expense
-
-        print("\nHighest Expense")
+    for row in rows:
         print("----------------")
-        print("Name:", highest["name"])
-        print("Category:", highest["category"])
-        print("Amount:", highest["amount"])
-
-    except Exception as e:
-        print("An unexpected error occurred:", e)
+        print("ID:", row[0])
+        print("Name:", row[1])
+        print("Category:", row[2])
+        print("Amount:", row[3])
 
 
-while True:
+def search_expenses(db):
+    print("\nSEARCH EXPENSE")
+    print("--------------")
+
+    category = input("Enter category: ").strip()
+
+    if not category:
+        print("Category cannot be empty.")
+        return
+
+    rows = db.search_expenses(category)
+
+    if not rows:
+        print("No expenses found.")
+        return
+
+    for row in rows:
+        print("----------------")
+        print("ID:", row[0])
+        print("Name:", row[1])
+        print("Category:", row[2])
+        print("Amount:", row[3])
+
+
+def update_expense(db):
+    print("\nUPDATE EXPENSE")
+    print("--------------")
+
     try:
-        print("\nMENU")
-        print("1.. ADD EXPENSE")
-        print("2.. SEARCH EXPENSE")
-        print("3.. VIEW EXPENSE")
-        print("4.. TOTAL EXPENSE")
-        print("5.. HIGHEST EXPENSE")
-        print("6.. EXIT")
+        expense_id = int(input("Enter expense ID: "))
 
-        choice = input("Enter your choice: ").strip()
+        name = input("New name: ").strip()
+        category = input("New category: ").strip()
+        amount = float(input("New amount: "))
 
-        if choice == "1":
-            AddExpense()
+        if not name:
+            print("Name cannot be empty.")
+            return
 
-        elif choice == "2":
-            SearchExpense()
+        if not category:
+            print("Category cannot be empty.")
+            return
 
-        elif choice == "3":
-            ViewExpense()
+        if amount < 0:
+            print("Amount cannot be negative.")
+            return
 
-        elif choice == "4":
-            TotalExpense()
+        result = db.update_expense(
+            expense_id,
+            name,
+            category,
+            amount
+        )
 
-        elif choice == "5":
-            HighestExpense()
-
-        elif choice == "6":
-            print("Goodbye!")
-            break
-
+        if result > 0:
+            print("Expense updated successfully!")
         else:
-            print("Invalid choice. Please enter a number from 1 to 6.")
+            print("Expense not found.")
 
-    except KeyboardInterrupt:# 'Ctrl + C' by user
-        print("\nProgram stopped by user.")
-        break
+    except ValueError:
+        print("Please enter valid values.")
 
-    except EOFError:# This can happen when input is unexpectedly terminated
-        print("\nInput was interrupted.")
-        break
+
+def delete_expense(db):
+    print("\nDELETE EXPENSE")
+    print("--------------")
+
+    try:
+        expense_id = int(input("Enter expense ID: "))
+
+        result = db.delete_expense(expense_id)
+
+        if result > 0:
+            print("Expense deleted successfully!")
+        else:
+            print("Expense not found.")
+
+    except ValueError:
+        print("Please enter a valid ID.")
+
+
+def total_expense(db):
+    print("\nTOTAL EXPENSE")
+    print("-------------")
+
+    total = db.total_expense()
+
+    print("Total Expense:", total)
+
+
+def highest_expense(db):
+    print("\nHIGHEST EXPENSE")
+    print("---------------")
+
+    highest = db.highest_expense()
+
+    if highest:
+        print("ID:", highest[0])
+        print("Name:", highest[1])
+        print("Category:", highest[2])
+        print("Amount:", highest[3])
+    else:
+        print("No expenses found.")
+
+
+def main():
+
+    try:
+        db = MySQLDB()
+
+        while True:
+
+            print("\n======================")
+            print("     EXPENSE TRACKER")
+            print("======================")
+
+            print("1. Add Expense")
+            print("2. View Expenses")
+            print("3. Search Expense")
+            print("4. Update Expense")
+            print("5. Delete Expense")
+            print("6. Total Expense")
+            print("7. Highest Expense")
+            print("8. Exit")
+
+            choice = input("\nEnter your choice: ").strip()
+
+            if choice == "1":
+                add_expense(db)
+
+            elif choice == "2":
+                view_expenses(db)
+
+            elif choice == "3":
+                search_expenses(db)
+
+            elif choice == "4":
+                update_expense(db)
+
+            elif choice == "5":
+                delete_expense(db)
+
+            elif choice == "6":
+                total_expense(db)
+
+            elif choice == "7":
+                highest_expense(db)
+
+            elif choice == "8":
+                print("Goodbye!")
+                break
+
+            else:
+                print("Invalid choice. Please choose 1-8.")
+
+        db.close()
 
     except Exception as e:
         print("An unexpected error occurred:", e)
+
+
+if __name__ == "__main__":
+    main()
