@@ -1,4 +1,5 @@
-from mysql_db import MySQLDB
+from sqlite_db import SQLiteDB
+#from mysql_db import MySQLDB
 
 
 def add_expense(db):
@@ -154,7 +155,8 @@ def highest_expense(db):
 def main():
 
     try:
-        db = MySQLDB()
+        db = SQLiteDB()
+        #db = MySQLDB()
 
         while True:
 
