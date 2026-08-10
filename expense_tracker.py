@@ -1,6 +1,6 @@
 #from sqlite_db import SQLiteDB
-from mysql_db import MySQLDB
-
+#from mysql_db import MySQLDB
+from postgresql_db import PostgreSQLDB
 
 def add_expense(db):
     print("\nADDING THE EXPENSE")
@@ -156,7 +156,8 @@ def main():
 
     try:
         #db = SQLiteDB()
-        db = MySQLDB()
+        #db = MySQLDB()
+        db = PostgreSQLDB()
 
         while True:
 
