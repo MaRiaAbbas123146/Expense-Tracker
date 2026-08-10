@@ -7,6 +7,7 @@ class SQLiteDB:
     def __init__(self, db_name="expenses.db"):
         self.connection = sqlite3.connect(db_name)
         self.create_table()
+        print("MySQL database connected successfully!")
 
     # Create expenses table
     def create_table(self):
