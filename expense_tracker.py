@@ -197,8 +197,9 @@ def main():
                 highest_expense(db)
 
             elif choice == "8":
-                print("Goodbye!")
-                break
+                 print("Goodbye!")
+                 db.close()
+                 break
 
             else:
                 print("Invalid choice. Please choose 1-8.")

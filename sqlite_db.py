@@ -153,6 +153,10 @@ class SQLiteDB:
         cursor.close()
 
         return result
+    
+    def close(self):
+        self.connection.close()
+        print("Database connection closed.")
 
 
 # Create SQLite database object
