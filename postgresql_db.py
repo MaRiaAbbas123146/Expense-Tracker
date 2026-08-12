@@ -1,4 +1,4 @@
-import psycopg
+import psycopg #driver
 from dotenv import load_dotenv
 import os
 
@@ -188,12 +188,5 @@ class PostgreSQLDB:
 
 
 db = PostgreSQLDB()
-
-db.add_expense("Pizza", "Food", 800)
-
-rows = db.view_expenses()
-
-for row in rows:
-    print(row)
 
 db.close()

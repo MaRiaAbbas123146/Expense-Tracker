@@ -1,5 +1,8 @@
 import sqlite3
 
+# con =sqlite.connect("db_name")
+# cur =connection.cursor()
+# cursor.execute("")
 
 class SQLiteDB:
 
@@ -23,7 +26,7 @@ class SQLiteDB:
         cursor = self.connection.cursor()
         cursor.execute(query)
 
-        self.connection.commit()
+        self.connection.commit()#save changes automatically
         cursor.close()
 
     # Add an expense

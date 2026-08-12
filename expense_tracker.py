@@ -1,6 +1,6 @@
-#from sqlite_db import SQLiteDB
+from sqlite_db import SQLiteDB
 #from mysql_db import MySQLDB
-from postgresql_db import PostgreSQLDB
+#from postgresql_db import PostgreSQLDB
 
 def add_expense(db):
     print("\nADDING THE EXPENSE")
@@ -155,9 +155,9 @@ def highest_expense(db):
 def main():
 
     try:
-        #db = SQLiteDB()
+        db = SQLiteDB()
         #db = MySQLDB()
-        db = PostgreSQLDB()
+       # db = PostgreSQLDB()
 
         while True:
 
@@ -204,8 +204,6 @@ def main():
 
             else:
                 print("Invalid choice. Please choose 1-8.")
-
-        db.close()
 
     except Exception as e:
         print("An unexpected error occurred:", e)
