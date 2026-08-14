@@ -1,6 +1,7 @@
-from sqlite_db import SQLiteDB
+#from sqlite_db import SQLiteDB
 #from mysql_db import MySQLDB
 #from postgresql_db import PostgreSQLDB
+from mongodb_db import MongoDB
 
 def add_expense(db):
     print("\nADDING THE EXPENSE")
@@ -28,7 +29,7 @@ def add_expense(db):
     except ValueError:
         print("Please enter a valid amount.")
 
-
+# ---------------- VIEW EXPENSES ----------------
 def view_expenses(db):
     print("\nYOUR EXPENSES")
     print("-------------")
@@ -46,7 +47,7 @@ def view_expenses(db):
         print("Category:", row[2])
         print("Amount:", row[3])
 
-
+# ---------------- SEARCH EXPENSE ----------------
 def search_expenses(db):
     print("\nSEARCH EXPENSE")
     print("--------------")
@@ -70,7 +71,7 @@ def search_expenses(db):
         print("Category:", row[2])
         print("Amount:", row[3])
 
-
+# ---------------- UPDATE EXPENSE ----------------
 def update_expense(db):
     print("\nUPDATE EXPENSE")
     print("--------------")
@@ -82,6 +83,10 @@ def update_expense(db):
         category = input("New category: ").strip()
         amount = float(input("New amount: "))
 
+        if not expense_id:
+            print("Expense ID cannot be empty.")
+            return
+        
         if not name:
             print("Name cannot be empty.")
             return
@@ -109,14 +114,21 @@ def update_expense(db):
     except ValueError:
         print("Please enter valid values.")
 
+    except Exception as e:
+        print("Error:", e)
 
+# ---------------- DELETE EXPENSE ----------------
 def delete_expense(db):
     print("\nDELETE EXPENSE")
     print("--------------")
 
     try:
-        expense_id = int(input("Enter expense ID: "))
+        expense_id = input("Enter expense ID: ").strip()
 
+        if not expense_id:
+            print("Expense ID cannot be empty.")
+            return
+        
         result = db.delete_expense(expense_id)
 
         if result > 0:
@@ -124,10 +136,11 @@ def delete_expense(db):
         else:
             print("Expense not found.")
 
-    except ValueError:
-        print("Please enter a valid ID.")
+    except Exception as e:
+        print("Error:", e)
 
 
+# ---------------- TOTAL EXPENSE ----------------
 def total_expense(db):
     print("\nTOTAL EXPENSE")
     print("-------------")
@@ -136,7 +149,7 @@ def total_expense(db):
 
     print("Total Expense:", total)
 
-
+# ---------------- HIGHEST EXPENSE ----------------
 def highest_expense(db):
     print("\nHIGHEST EXPENSE")
     print("---------------")
@@ -155,9 +168,10 @@ def highest_expense(db):
 def main():
 
     try:
-        db = SQLiteDB()
+        #db = SQLiteDB()
         #db = MySQLDB()
-       # db = PostgreSQLDB()
+        #db = PostgreSQLDB()
+        db=MongoDB()
 
         while True:
 
