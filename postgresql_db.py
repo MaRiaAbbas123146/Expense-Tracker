@@ -187,6 +187,8 @@ class PostgreSQLDB:
         print("PostgreSQL connection closed.")
 
 
-db = PostgreSQLDB()
+if __name__ == "__main__":
 
-db.close()
+    db = PostgreSQLDB()
+
+    db.close()

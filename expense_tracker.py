@@ -1,6 +1,6 @@
-#from sqlite_db import SQLiteDB
-#from mysql_db import MySQLDB
-#from postgresql_db import PostgreSQLDB
+from sqlite_db import SQLiteDB
+from mysql_db import MySQLDB
+from postgresql_db import PostgreSQLDB
 from mongodb_db import MongoDB
 
 def add_expense(db):
@@ -165,13 +165,68 @@ def highest_expense(db):
         print("No expenses found.")
 
 
+# ==================================================
+# DATABASE SELECTION
+# ==================================================
+
+def select_database():
+
+    print("\n==============================")
+    print("      SELECT DATABASE")
+    print("==============================")
+
+    print("1. SQLite")
+    print("2. MySQL")
+    print("3. PostgreSQL")
+    print("4. MongoDB")
+
+    while True:
+
+        choice = input("\nChoose database (1-4): ").strip()
+
+        try:
+
+            if choice == "1":
+
+                print("\nUsing SQLite...")
+                return SQLiteDB()
+
+            elif choice == "2":
+
+                print("\nUsing MySQL...")
+                return MySQLDB()
+
+            elif choice == "3":
+                print("\nUsing PostgreSQL...")
+                return PostgreSQLDB()
+
+            elif choice == "4":
+
+                print("\nUsing MongoDB...")
+                return MongoDB()
+
+            else:
+
+                print("Invalid choice. Please choose 1-4.")
+
+        except Exception as e:
+
+            print("Could not connect to database.")
+            print("Error:", e)
+            return None
+
 def main():
+
+    db = select_database()
+
+    if db is None:
+        return
 
     try:
         #db = SQLiteDB()
         #db = MySQLDB()
         #db = PostgreSQLDB()
-        db=MongoDB()
+        #db=MongoDB()
 
         while True:
 
@@ -222,6 +277,6 @@ def main():
     except Exception as e:
         print("An unexpected error occurred:", e)
 
-
+# PROGRAM START
 if __name__ == "__main__":
     main()

@@ -164,4 +164,6 @@ class SQLiteDB:
 
 
 # Create SQLite database object
-db = SQLiteDB()
+if __name__ == "__main__":
+
+    db = SQLiteDB()

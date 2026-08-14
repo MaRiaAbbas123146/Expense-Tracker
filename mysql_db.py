@@ -190,3 +190,6 @@ class MySQLDB:
             self.connection.close()
             print("MySQL connection closed.")
 
+if __name__ == "__main__":
+
+    db = MySQLDB()

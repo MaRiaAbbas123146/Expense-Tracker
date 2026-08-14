@@ -176,5 +176,4 @@ class MongoDB:
 if __name__ == "__main__":
 
     db = MongoDB()
-
     db.close()
