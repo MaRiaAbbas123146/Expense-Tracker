@@ -1,0 +1,13 @@
+Hello from Python and MinIO!
+Testing the data storage by MinIO
+Python
+  ↓
+boto3
+  ↓
+S3 API
+  ↓
+MinIO
+  ↓
+expense-tracker bucket
+  ↓
+Screenshot (645).png

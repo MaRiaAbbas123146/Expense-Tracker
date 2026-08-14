@@ -268,7 +268,6 @@ def main():
 
             elif choice == "8":
                  print("Goodbye!")
-                 db.close()
                  break
 
             else:
@@ -276,6 +275,8 @@ def main():
 
     except Exception as e:
         print("An unexpected error occurred:", e)
+    finally:
+        db.close()
 
 # PROGRAM START
 if __name__ == "__main__":

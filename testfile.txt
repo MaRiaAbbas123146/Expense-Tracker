@@ -1,0 +1,47 @@
+Hello from Python and MinIO!
+Testing the data storage by MinIO
+Python
+  ↓
+boto3
+  ↓
+S3 API
+  ↓
+MinIO
+  ↓
+expense-tracker bucket
+  ↓
+Screenshot (645).png
+
+MinIO is an S3-compatible object-storage system that can run locally or in a private environment.
+I used MinIO to practice S3-compatible object storage locally without requiring an AWS account or billing setup
+Boto3 is the AWS SDK for Python, and because MinIO supports the S3 API, boto3 can communicate with MinIO using S3 operations.
+
+                 EXPENSE TRACKER
+                       │
+        ┌──────────────┼──────────────┐
+        ↓              ↓              ↓
+   SQLite          MySQL        PostgreSQL
+   Database        Database       Database
+        │              │              │
+        └──────────────┼──────────────┘
+                       │
+                    MongoDB
+                 Document DB
+                       
+              + Object Storage
+                       │
+                     MinIO
+                       │
+                    Bucket
+                       │
+                    Objects
+
+Operation:	Python/S3 API
+ ↓               ↓ 
+List:	    list_objects_v2()
+Upload:	  put_object()
+Download	download_file()
+Delete:	  delete_object()
+
+http://localhost:9000
+MinIO server
